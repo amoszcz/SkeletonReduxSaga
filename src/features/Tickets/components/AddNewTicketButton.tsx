@@ -2,7 +2,7 @@ import React, {FC, useEffect, useRef} from 'react';
 import {START_ADD_TICKET} from "../sagas/Tickets.saga";
 import {useAppSelector} from "../../../app/hooks";
 import {useDispatch} from "react-redux";
-import {setFocusAddButtonRequired} from "../store/Tickets.store";
+import {clearFocusAddButton} from "../store/Tickets.store";
 
 interface AddNewTicketButtonProps {
 }
@@ -13,7 +13,7 @@ const AddNewTicketButtonComponent: FC<AddNewTicketButtonProps> = () => {
     const {showEdit, focusAddButtonRequired} = useAppSelector(state => state.ticketsState);
     useEffect(() => {
         if (focusAddButtonRequired) {
-            dispatch(setFocusAddButtonRequired(false));
+            dispatch(clearFocusAddButton());
             buttonAdd.current?.focus();
         }
     }, [focusAddButtonRequired])
@@ -21,7 +21,7 @@ const AddNewTicketButtonComponent: FC<AddNewTicketButtonProps> = () => {
         <button autoFocus={true} ref={btn => {
             if (btn) buttonAdd.current = btn;
         }} onClick={() => {
-            dispatch({type: START_ADD_TICKET})
+            dispatch({type: START_ADD_TICKET}) 
         }} disabled={showEdit}>Dodaj nowy ticket
         </button>
     </>;

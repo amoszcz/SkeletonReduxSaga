@@ -45,8 +45,11 @@ export const ticketsSlice = createSlice({
         hideTicketEdit:(state=>{
             state.showEdit = false;
         }),
-        setFocusAddButtonRequired:((state,action:PayloadAction<boolean>) => {
-            state.focusAddButtonRequired = action.payload;
+        focusAddButton:((state) => {
+            state.focusAddButtonRequired = true;
+        }),
+        clearFocusAddButton:((state) => {
+            state.focusAddButtonRequired = false;
         })
     },
     initialState: initialTicketsState,
@@ -58,4 +61,5 @@ export const changeTicketName = ticketsSlice.actions.changeTicketName;
 export const clearEditedTicket = ticketsSlice.actions.clearEditedTicket;
 export const showTicketEdit = ticketsSlice.actions.showTicketEdit;
 export const hideTicketEdit = ticketsSlice.actions.hideTicketEdit;
-export const setFocusAddButtonRequired = ticketsSlice.actions.setFocusAddButtonRequired;
+export const focusAddButton = ticketsSlice.actions.focusAddButton;
+export const clearFocusAddButton = ticketsSlice.actions.focusAddButton;
