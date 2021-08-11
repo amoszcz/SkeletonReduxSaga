@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Guid } from '../../../app/guid';
 
 export interface Ticket {
     name: string;
     content: string;
+    guid: Guid;
 }
 
-export const EmptyTicket = { content: '', name: '' } as Ticket;
+export const EmptyTicket = { content: '', name: '', guid: Guid.NewGuid() } as Ticket;
 
 export interface TicketsState {
     tickets: Ticket[];
@@ -19,12 +21,14 @@ export const initialTicketsState = {
         {
             name: 'First Ticket',
             content: 'Add more tickets',
+            guid: Guid.NewGuid(),
         },
     ],
     editedTicket: EmptyTicket,
     showEdit: false,
     focusAddButtonRequired: false,
 } as TicketsState;
+
 export const ticketsSlice = createSlice({
     name: 'TicketsState',
     reducers: {
@@ -42,7 +46,7 @@ export const ticketsSlice = createSlice({
             state.showEdit = true;
         },
         clearEditedTicket: (state) => {
-            state.editedTicket = EmptyTicket;
+            state.editedTicket = { ...EmptyTicket, guid: Guid.NewGuid() };
         },
         hideTicketEdit: (state) => {
             state.showEdit = false;
@@ -52,6 +56,10 @@ export const ticketsSlice = createSlice({
         },
         clearFocusAddButton: (state) => {
             state.focusAddButtonRequired = false;
+        },
+        removeTicket: (state, action: PayloadAction<Guid>) => {
+            const index = state.tickets.findIndex((el) => el.guid === action.payload);
+            if (index > -1) state.tickets.splice(index, 1);
         },
     },
     initialState: initialTicketsState,
@@ -65,3 +73,4 @@ export const showTicketEdit = ticketsSlice.actions.showTicketEdit;
 export const hideTicketEdit = ticketsSlice.actions.hideTicketEdit;
 export const focusAddButton = ticketsSlice.actions.focusAddButton;
 export const clearFocusAddButton = ticketsSlice.actions.focusAddButton;
+export const removeTicket = ticketsSlice.actions.removeTicket;

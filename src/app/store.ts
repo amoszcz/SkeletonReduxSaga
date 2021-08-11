@@ -3,15 +3,18 @@ import createSagaMiddleware from 'redux-saga';
 import { ticketsSlice, TicketsState } from '../features/Tickets/store/Tickets.store';
 import { loadingPanelSlice, LoadingPanelState } from '../features/LoadingPanel/store/LoadingPanel.state';
 import { rootSaga } from './rootSaga';
+import { confirmReducer, ConfirmState } from '../features/Confirm/store/Confrim.state';
 
 export interface AppState {
     ticketsState: TicketsState;
     loadingPanelState: LoadingPanelState;
+    confirmState: ConfirmState;
 }
 
 export const appStateReducer = combineReducers<AppState, TypeThunkAction>({
     ticketsState: ticketsSlice.reducer,
     loadingPanelState: loadingPanelSlice.reducer,
+    confirmState: confirmReducer,
 });
 const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore<AppState, TypeThunkAction>({
