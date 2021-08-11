@@ -1,19 +1,19 @@
-import {configureStore, ThunkAction, Action, applyMiddleware, combineReducers, createStore} from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, applyMiddleware, combineReducers, createStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import {ticketsSlice, TicketsState} from "../features/Tickets/store/Tickets.store";
-import {loadingPanelSlice, LoadingPanelState} from "../features/LoadingPanel/store/LoadingPanel.state";
-import {rootSaga} from "./rootSaga";
+import { ticketsSlice, TicketsState } from '../features/Tickets/store/Tickets.store';
+import { loadingPanelSlice, LoadingPanelState } from '../features/LoadingPanel/store/LoadingPanel.state';
+import { rootSaga } from './rootSaga';
 
 export interface AppState {
-    ticketsState:TicketsState;
-    loadingPanelState:LoadingPanelState;
+    ticketsState: TicketsState;
+    loadingPanelState: LoadingPanelState;
 }
 
-export const appStateReducer = combineReducers<AppState,TypeThunkAction>({    
-    ticketsState:ticketsSlice.reducer,
-    loadingPanelState:loadingPanelSlice.reducer
+export const appStateReducer = combineReducers<AppState, TypeThunkAction>({
+    ticketsState: ticketsSlice.reducer,
+    loadingPanelState: loadingPanelSlice.reducer,
 });
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore<AppState, TypeThunkAction>({
     reducer: appStateReducer,
     middleware: [sagaMiddleware],
@@ -25,4 +25,3 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unkn
 export interface TypeThunkAction extends AppThunk {
     type: void;
 }
-

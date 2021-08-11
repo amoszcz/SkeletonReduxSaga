@@ -1,14 +1,11 @@
-import React, {FC} from 'react';
-import {useAppSelector} from "../../../app/hooks";
+import React, { FC } from 'react';
+import { useAppSelector } from '../../../app/hooks';
 
-interface LoadingPanelProps {
-}
+interface LoadingPanelProps {}
 
 const LoadingPanelComponent: FC<LoadingPanelProps> = () => {
-    const visible = useAppSelector(state => state.loadingPanelState.visible)
+    const visible = useAppSelector((state) => state.loadingPanelState.visible);
 
-    return <>
-        {visible && <>Loading...</>}
-    </>;
+    return <>{visible && <>Loading...</>}</>;
 };
 export const LoadingPanel = LoadingPanelComponent;
