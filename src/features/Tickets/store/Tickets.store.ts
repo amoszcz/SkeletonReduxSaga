@@ -5,9 +5,10 @@ export interface Ticket {
     name: string;
     content: string;
     guid: Guid;
+    finished: boolean;
 }
 
-export const EmptyTicket = { content: '', name: '', guid: Guid.NewGuid() } as Ticket;
+export const EmptyTicket = { content: '', name: '', guid: Guid.NewGuid(), finished: false } as Ticket;
 
 export interface TicketsState {
     tickets: Ticket[];
@@ -22,6 +23,7 @@ export const initialTicketsState = {
             name: 'First Ticket',
             content: 'Add more tickets',
             guid: Guid.NewGuid(),
+            finished: false,
         },
     ],
     editedTicket: EmptyTicket,
@@ -61,6 +63,11 @@ export const ticketsSlice = createSlice({
             const index = state.tickets.findIndex((el) => el.guid === action.payload);
             if (index > -1) state.tickets.splice(index, 1);
         },
+        finishTicket: (state, action: PayloadAction<Guid>) => {
+            const ticket = state.tickets.find((el) => el.guid === action.payload);
+            if (!ticket) return;
+            ticket.finished = true;
+        },
     },
     initialState: initialTicketsState,
 });
@@ -72,5 +79,6 @@ export const clearEditedTicket = ticketsSlice.actions.clearEditedTicket;
 export const showTicketEdit = ticketsSlice.actions.showTicketEdit;
 export const hideTicketEdit = ticketsSlice.actions.hideTicketEdit;
 export const focusAddButton = ticketsSlice.actions.focusAddButton;
+export const finishTicket = ticketsSlice.actions.finishTicket;
 export const clearFocusAddButton = ticketsSlice.actions.focusAddButton;
 export const removeTicket = ticketsSlice.actions.removeTicket;
