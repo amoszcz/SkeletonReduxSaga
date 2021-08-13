@@ -6,12 +6,12 @@ import { EDIT_TICKET_FINISHED } from './Tickets.saga';
 import { AppState } from '../../../app/store';
 export const EDIT_TICKET_SAVE = 'EDIT_TICKET_SAVE';
 export const EDIT_TICKET_CANCEL = 'EDIT_TICKET_CANCEL';
-
+export const selectEditedTicket = (state: AppState) => state.ticketsState.editedTicket;
 export const editTicketTask = function* () {
     const action = yield take([EDIT_TICKET_SAVE, EDIT_TICKET_CANCEL]);
     if (action.type === EDIT_TICKET_SAVE) {
         const simulateSaveToBackend = waitASecond as (ticketToSave: Ticket) => Promise<void>;
-        const editedTicket = yield select((state: AppState) => state.ticketsState.editedTicket);
+        const editedTicket = yield select(selectEditedTicket);
         yield put(showLoadingPanel());
         yield call(simulateSaveToBackend, editedTicket);
         yield put(hideLoadingPanel());
