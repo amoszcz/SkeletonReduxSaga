@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Ticket } from '../store/Tickets.store';
 import { useDispatch } from 'react-redux';
 import { START_DELETE_TICKET } from '../sagas/removeTicket.saga';
-import { FINISH_TICKET } from '../sagas/finishTicket.saga';
+import { FINISH_TICKET_REQUESTED } from '../sagas/finishTicket.saga';
 
 interface TicketElementProps {
     ticket: Ticket;
@@ -43,7 +43,7 @@ const TicketElementComponent: FC<TicketElementProps> = ({ ticket }) => {
                         id={`ticket_${ticket.guid}`}
                         type={'checkbox'}
                         checked={ticket.finished}
-                        onChange={() => dispatch({ type: FINISH_TICKET, payload: ticket.guid })}
+                        onChange={() => dispatch({ type: FINISH_TICKET_REQUESTED, payload: ticket.guid })}
                     />
                 </span>
                 {ticket.finished && <span style={{ position: 'relative', left: '100px' }}>[Done!]</span>}
